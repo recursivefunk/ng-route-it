@@ -1,0 +1,15 @@
+{
+  "name": "ng-route-it",
+  "version": "0.0.0",
+  "description": "Takes server routes and converts them into angular.js routes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Johnny Ray Austin",
+  "license": "BSD-2-Clause",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jrayaustin/ng-route-it.git"
+  }
+}
