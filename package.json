@@ -1,6 +1,6 @@
 {
   "name": "ng-route-it",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Takes server routes and converts them into angular.js routes",
   "main": "index.js",
   "scripts": {

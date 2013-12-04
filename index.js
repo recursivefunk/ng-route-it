@@ -9,7 +9,8 @@ module.exports = function(req) {
     if (tmp) {
       if ( tmp[ 0 ].indexOf(':') === 0 ) {
         var length = tmp.length;
-        tmp = tmp.substring( 1, length - 1 );
+        tmp = tmp.substring( 1 );
+        tmp = req.params[ tmp ];
       }
       str += '/' + tmp;
     }
