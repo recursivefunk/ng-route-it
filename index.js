@@ -2,7 +2,6 @@
 
 module.exports = function(req) {
   var obj = req.path.split('/');
-
   var str = '/#';
 
   for(var i in obj) {
