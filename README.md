@@ -1,9 +1,12 @@
 
 
 The problem: 
-You have a single page app routed via angular.js. Like so
+You have a single page app routed via angular.js and you have html5Mode turned on. Like so
 
 ```javascript
+  $locationProvider
+    .html5Mode(true);
+
   $routeProvider
     .when('/', {templateUrl: 'partials/1.html', controller: 'MainCtrl'})
     .when('/people/:team/:id', {templateUrl: 'partials/partial1.html', controller: 'PersonCtrl'})
@@ -24,6 +27,23 @@ Just listen for your angular.js routes on the server and convert them using ng-r
     var actualPath = routeIt( req );
     res.redirect( actualPath );
   });
+```
+
+You can use paths with static html at the root followed by your angular path
+
+```javascript
+  var routeIt = require('ng-route-it');
+
+  app.get('/index.html/:team/:id', function(req, res) {
+    var actualPath = routeIt( req );
+    res.redirect( actualPath );
+  });
+```
+
+Tests
+
+```
+  grunt
 ```
 
 That's it. Simple. More features coming soon...

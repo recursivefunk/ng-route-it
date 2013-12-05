@@ -1,6 +1,6 @@
+var sysPath = require('path');
 
-
-module.exports = function(req) {
+var parseIt = function(req) {
   var obj = req.path.split('/');
   var str = '/#';
 
@@ -16,4 +16,27 @@ module.exports = function(req) {
     }
   }
   return str;
-}
+};
+
+var pointsToStaticHtml = function(path) {
+  var index = path.indexOf( '.html' );
+  if ( index > -1 ) return index + 5;
+};
+
+module.exports = function(req) {
+  var path = req.path;
+  var staticIndexEnd = pointsToStaticHtml( path );
+  if ( staticIndexEnd ) {
+    var staticFilePath = path.substring( 0, staticIndexEnd );
+    var ajaxPath = path.substring( staticIndexEnd );
+    var fakeReq = {
+      params: req.params,
+      path: ajaxPath
+    };
+    var angularPath = parseIt( fakeReq );
+    return str = sysPath.join( staticFilePath, angularPath );
+  } else {
+    return parseIt( req );
+  }
+};
+
