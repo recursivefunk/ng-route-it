@@ -56,9 +56,10 @@ Using a prefix hash? No problem
     ngRoute.setPrefixHash( '!' );
     var actualPath = ngRoute.routeIt( req );
     res.redirect( actualPath );
-  })
+  });
+```
 
-Tests
+To run tests
 
 ```
   grunt
