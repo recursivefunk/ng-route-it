@@ -5,7 +5,7 @@ You have a single page app routed via angular.js and you have html5Mode turned o
 
 ```javascript
   $locationProvider
-    .html5Mode(true);
+    .html5Mode( true );
 
   $routeProvider
     .when('/', {templateUrl: 'partials/1.html', controller: 'MainCtrl'})
@@ -21,10 +21,10 @@ via the browser URL naviagtion (or external link) your server throws a 404.
 Just listen for your angular.js routes on the server and convert them using ng-route-it.
 
 ```javascript
-  var routeIt = require('ng-route-it');
+  var ngRoute = require( 'ng-route-it' );
 
   app.get('/people/:team/:id', function(req, res) {
-    var actualPath = routeIt( req );
+    var actualPath = ngRoute.routeIt( req );
     res.redirect( actualPath );
   });
 ```
@@ -32,13 +32,31 @@ Just listen for your angular.js routes on the server and convert them using ng-r
 You can use paths with static html at the root followed by your angular path
 
 ```javascript
-  var routeIt = require('ng-route-it');
+  var routeIt = require( 'ng-route-it' );
 
   app.get('/index.html/:team/:id', function(req, res) {
-    var actualPath = routeIt( req );
+    var actualPath = ngRoute.routeIt( req );
     res.redirect( actualPath );
   });
 ```
+
+Using a prefix hash? No problem
+
+```javascript
+  // angular code
+  $locationProvider
+    .html5Mode( true )
+    .hashPrefix( '!' );
+
+  // in your server code
+
+  var routeIt = require( 'ng-route-it' );
+
+  app.get('/index.html/:team/:id', function(req, res) {
+    ngRoute.setPrefixHash( '!' );
+    var actualPath = ngRoute.routeIt( req );
+    res.redirect( actualPath );
+  })
 
 Tests
 
