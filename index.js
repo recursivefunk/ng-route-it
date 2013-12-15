@@ -1,8 +1,13 @@
 var sysPath = require('path');
+var prefixHash;
 
 var parseIt = function(req) {
   var obj = req.path.split('/');
   var str = '/#';
+
+  if ( prefixHash ) {
+    str = '#' + prefixHash + '/';
+  }
 
   for(var i in obj) {
     var tmp = obj[ i ];
@@ -15,7 +20,7 @@ var parseIt = function(req) {
       str += '/' + tmp;
     }
   }
-  return str;
+  return str.replace( /\/\//, '/' );
 };
 
 var pointsToStaticHtml = function(path) {
@@ -23,7 +28,17 @@ var pointsToStaticHtml = function(path) {
   if ( index > -1 ) return index + 5;
 };
 
-module.exports = function(req) {
+exports.removePrefixHash = function() {
+  prefixHash = null;
+};
+
+exports.setPrefixHash = function(str) {
+  if ( str && str !== '' ) {
+    prefixHash = str;
+  }
+};
+
+exports.routeIt = function(req) {
   var path = req.path;
   var staticIndexEnd = pointsToStaticHtml( path );
   if ( staticIndexEnd ) {
