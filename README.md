@@ -53,8 +53,11 @@ Using a prefix hash? No problem
   var routeIt = require( 'ng-route-it' );
 
   app.get('/index.html/:team/:id', function(req, res) {
-    ngRoute.setPrefixHash( '!' );
-    var actualPath = ngRoute.routeIt( req );
+    var actualPath;
+    actualPath = 
+      ngRoute
+        .setPrefixHash( '!' )
+        .routeIt( req );
     res.redirect( actualPath );
   });
 ```

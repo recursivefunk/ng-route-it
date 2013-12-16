@@ -4,8 +4,8 @@ var ngRoute = require('../index');
 
 describe('Ng-Route-It', function(){
 
+  // simulated request object
   var requests = {
-    // a valid path with params and immutable path parts
     validRequestWithParams: {
       params: {
         foo: 'bar',
@@ -14,7 +14,6 @@ describe('Ng-Route-It', function(){
       path: '/home/:foo/path/:test'
     },
 
-    // valid request with no params present
     validRequestWithNoParams: {
       params: {},
       path: '/path/to/profile'
@@ -48,46 +47,60 @@ describe('Ng-Route-It', function(){
   };
 
   it('should correctly route a request with params', function (done){
-    var path = ngRoute.routeIt( requests.validRequestWithParams );
-    path.should.equal( '/#/home/bar/path/blah' );
+    ngRoute
+      .routeIt( requests.validRequestWithParams )
+      .should
+      .equal( '/#/home/bar/path/blah' );
     return done();
   });
 
   it('should correctly route a request with no', function (done){
-    var path = ngRoute.routeIt( requests.validRequestWithNoParams );
-    path.should.equal( '/#/path/to/profile' );
+    ngRoute
+      .routeIt( requests.validRequestWithNoParams )
+      .should
+      .equal( '/#/path/to/profile' );
     return done();
   });  
 
   it('should correctly route an invalid request with empty parts', function (done){
-    var path = ngRoute.routeIt( requests.invalidRequestEmptyPathParts );
-    path.should.equal( '/#/path/to/something' );
+    ngRoute
+      .routeIt( requests.invalidRequestEmptyPathParts )
+      .should
+      .equal( '/#/path/to/something' );
     return done();
   });   
 
   it('should correctly route an invalid request with empty parts and params', function (done){
-    var path = ngRoute.routeIt( requests.invalidRequestEmptyPathPartsWithParams );
-    path.should.equal( '/#/path/to/something/bar' );
+    ngRoute
+      .routeIt( requests.invalidRequestEmptyPathPartsWithParams )
+      .should
+      .equal( '/#/path/to/something/bar' );
     return done();
   });   
 
   it('should correctly route a path for static files and ajax', function (done){
-    var path = ngRoute.routeIt( requests.staticWithAjax );
-    path.should.equal( '/index.html/#/path/to/bar' );
+    ngRoute
+      .routeIt( requests.staticWithAjax )  
+      .should
+      .equal( '/index.html/#/path/to/bar' );
     return done();
   });  
 
-  it('should correctly route a path with a prefix hash', function (done){
-    ngRoute.setPrefixHash('!');
-    var path = ngRoute.routeIt( requests.withPrefixHash );
-    path.should.equal( '#!/path/to/bar' );
+  it('should correctly route a path with a prefix hash', function (done){ 
+    ngRoute
+      .setPrefixHash('!')  
+      .routeIt( requests.withPrefixHash )
+      .should
+      .equal( '#!/path/to/bar' )
     return done();
   });  
 
   it('should remove the prefix hash', function (done){
-    ngRoute.removePrefixHash();
-    var path = ngRoute.routeIt( requests.withPrefixHash );
-    path.should.equal( '/#/path/to/bar' );
+    ngRoute
+      .removePrefixHash()
+      .routeIt( requests.withPrefixHash )
+      .should
+      .equal( '/#/path/to/bar' );
     return done();
   });
 

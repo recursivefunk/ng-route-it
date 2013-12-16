@@ -30,12 +30,14 @@ var pointsToStaticHtml = function(path) {
 
 exports.removePrefixHash = function() {
   prefixHash = null;
+  return exports;
 };
 
 exports.setPrefixHash = function(str) {
   if ( str && str !== '' ) {
     prefixHash = str;
   }
+  return exports;
 };
 
 exports.routeIt = function(req) {
