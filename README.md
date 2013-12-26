@@ -49,7 +49,6 @@ Using a prefix hash? No problem
     .hashPrefix( '!' );
 
   // in your server code
-
   var routeIt = require( 'ng-route-it' );
 
   app.get('/index.html/:team/:id', function(req, res) {
