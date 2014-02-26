@@ -16,8 +16,8 @@
 
     for(var i in obj) {
       var tmp = obj[ i ];
-      if (tmp) {
-        if ( tmp[ 0 ].indexOf(':') === 0 ) {
+      if ( tmp ) {
+        if ( tmp[ 0 ].indexOf( ':' ) === 0 ) {
           var length = tmp.length;
           tmp = tmp.substring( 1 );
           tmp = req.params[ tmp ];
@@ -25,6 +25,7 @@
         str += '/' + tmp;
       }
     }
+
     return str.replace( /\/\//, '/' );
   };
 
@@ -63,6 +64,31 @@
       return parseIt( req );
     }
   };
+
+  exports.routeAll = function(paths, app) {
+    var newPaths = [];
+    paths.forEach(function(p){
+      app.get(p, function(req, res){
+        var angPath = exports.routeIt( req );
+        res.redirect( angPath );
+        newPaths.push( angPath );
+      });
+    });
+    return newPaths;
+  }
+
+  exports.testRouteAll = function(paths) {
+    var newPaths = [];
+    for (var i = 0; i < paths.length; i++) {
+      var p = paths[ i ];
+      var req = {};
+      req.path = p;
+      req.params = {};
+      var newPath = exports.routeIt( req );
+      newPaths.push( newPath );      
+    }
+    return newPaths;
+  }
 
 })();
 

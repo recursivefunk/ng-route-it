@@ -2,6 +2,8 @@
 
 module.exports = function(grunt) {
 
+  'use strict';
+
   grunt.loadNpmTasks('grunt-mocha-test');
 
   grunt.initConfig({
@@ -9,8 +11,8 @@ module.exports = function(grunt) {
       test: {
         src: ['test/test.js']
       }
-    }  
-  });  
+    }
+  });
 
   grunt.registerTask('default', 'mochaTest');
 
