@@ -75,7 +75,7 @@
       });
     });
     return newPaths;
-  }
+  };
 
   exports.testRouteAll = function(paths) {
     var newPaths = [];
@@ -85,10 +85,10 @@
       req.path = p;
       req.params = {};
       var newPath = exports.routeIt( req );
-      newPaths.push( newPath );      
+      newPaths.push( newPath );
     }
     return newPaths;
-  }
+  };
 
 })();
 
