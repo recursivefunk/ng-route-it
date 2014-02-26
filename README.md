@@ -1,6 +1,6 @@
 
 
-The problem: 
+The problem:
 You have a single page app routed via angular.js and you have html5Mode turned on. Like so
 
 ```javascript
@@ -10,10 +10,10 @@ You have a single page app routed via angular.js and you have html5Mode turned o
   $routeProvider
     .when('/', {templateUrl: 'partials/1.html', controller: 'MainCtrl'})
     .when('/people/:team/:id', {templateUrl: 'partials/partial1.html', controller: 'PersonCtrl'})
-    .otherwise({redirectTo: '/'});  
+    .otherwise({redirectTo: '/'});
 ```
 
-But you're serving that app using express (or a similar framework). You're server only knows about your one route at '/'. 
+But you're serving that app using express (or a similar framework). You're server only knows about your one route at '/'.
 
 Angular knows /people/:team/:id sends you to a person's profile but if a user hits that URL
 via the browser URL naviagtion (or external link) your server throws a 404.
@@ -53,12 +53,17 @@ Using a prefix hash? No problem
 
   app.get('/index.html/:team/:id', function(req, res) {
     var actualPath;
-    actualPath = 
+    actualPath =
       ngRoute
         .setPrefixHash( '!' )
         .routeIt( req );
     res.redirect( actualPath );
   });
+```
+
+Lots of paths? No problem, use routeAll
+```javascript
+  ngRoute.routeAll( [ '/view1', '/view2', '/path/to/view/:username' ], app );
 ```
 
 To run tests
