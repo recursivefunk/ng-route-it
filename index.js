@@ -98,6 +98,7 @@
 
   exports.configure = function( _managedRoutes ) {
     managedRoutes = _managedRoutes || managedRoutes;
+    return exports;
   };
 
   exports.route = function( req, res, next ) {
