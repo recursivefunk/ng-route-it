@@ -45,6 +45,8 @@ You can use paths with static html at the root followed by your angular path
     '/index.html/people/:team/:id'
   ];
 
+  ngRoute.configure( myAngularRoutes );
+
   app.use( ngRoute.route );
 ```
 
