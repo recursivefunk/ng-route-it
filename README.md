@@ -1,4 +1,4 @@
-
+# New version breaks anything older than 0.2.0!
 
 The problem:
 You have a single page app routed via angular.js and you have html5Mode turned on. Like so
