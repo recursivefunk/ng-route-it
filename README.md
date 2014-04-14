@@ -32,7 +32,8 @@ Use ng-route-it as a third party middleware
 
   app.use( ngRoute.route );
 
-  // Now all of your angular routes will pass through the server to your angular app which knows how to deal with them
+  // Now all of your angular routes will pass through the server to your angular app
+  // which knows how to deal with them
 ```
 
 You can use paths with static html at the root followed by your angular path
