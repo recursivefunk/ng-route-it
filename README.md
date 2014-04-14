@@ -13,20 +13,26 @@ You have a single page app routed via angular.js and you have html5Mode turned o
     .otherwise({redirectTo: '/'});
 ```
 
-But you're serving that app using express (or a similar framework). You're server only knows about your one route at '/'.
+But you're serving that app using express. You're server only knows about your one route at '/'.
 
 Angular knows /people/:team/:id sends you to a person's profile but if a user hits that URL
 via the browser URL naviagtion (or external link) your server throws a 404.
 
-Just listen for your angular.js routes on the server and convert them using ng-route-it.
+Use ng-route-it as a third party middleware
 
 ```javascript
   var ngRoute = require( 'ng-route-it' );
 
-  app.get('/people/:team/:id', function(req, res) {
-    var actualPath = ngRoute.routeIt( req );
-    res.redirect( actualPath );
-  });
+  var myAngularRoutes = [
+    '/people/:team/:id',
+    '/another/route'
+  ];
+
+  ngRoute.configure( myAngularRoutes );
+
+  app.use( ngRoute.route );
+
+  // Now all of your angular routes will pass through the server to your angular app which knows how to deal with them
 ```
 
 You can use paths with static html at the root followed by your angular path
@@ -34,10 +40,11 @@ You can use paths with static html at the root followed by your angular path
 ```javascript
   var routeIt = require( 'ng-route-it' );
 
-  app.get('/index.html/:team/:id', function(req, res) {
-    var actualPath = ngRoute.routeIt( req );
-    res.redirect( actualPath );
-  });
+  var myAngularRoutes = [
+    '/index.html/people/:team/:id'
+  ];
+
+  app.use( ngRoute.route );
 ```
 
 Using a prefix hash? No problem
@@ -51,19 +58,11 @@ Using a prefix hash? No problem
   // in your server code
   var routeIt = require( 'ng-route-it' );
 
-  app.get('/index.html/:team/:id', function(req, res) {
-    var actualPath;
-    actualPath =
-      ngRoute
-        .setPrefixHash( '!' )
-        .routeIt( req );
-    res.redirect( actualPath );
-  });
-```
+  // .. define an array of routes
 
-Lots of paths? No problem, use routeAll
-```javascript
-  ngRoute.routeAll( [ '/view1', '/view2', '/path/to/view/:username' ], app );
+  ngRoute.configure( myAngularRoutes ).setPrefixHash( '!' );
+
+  app.use( ngRoute.route );
 ```
 
 To run tests
@@ -71,6 +70,4 @@ To run tests
 ```
   grunt
 ```
-
-That's it. Simple. More features coming soon...
 

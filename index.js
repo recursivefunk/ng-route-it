@@ -5,6 +5,7 @@
 
   var sysPath = require('path');
   var prefixHash;
+  var managedRoutes = [];
 
   var parseIt = function(req) {
     var obj = req.path.split('/');
@@ -48,6 +49,11 @@
     return exports;
   };
 
+  /**
+   * DEPRECATED DO NOT USE
+   * @param  {[type]} req [description]
+   * @return {[type]}     [description]
+   */
   exports.routeIt = function(req) {
     var path = req.path;
     var staticIndexEnd = pointsToStaticHtml( path );
@@ -65,29 +71,43 @@
     }
   };
 
+  /**
+   * DEPRECATED DO NOT USE
+   * @param  {[type]} paths [description]
+   * @param  {[type]} app   [description]
+   * @return {[type]}       [description]
+   */
   exports.routeAll = function(paths, app) {
     var newPaths = [];
+    var onRoute = function(req, res){
+      var angPath = exports.routeIt( req );
+      res.redirect( angPath );
+      newPaths.push( angPath );
+    };
     paths.forEach(function(p){
-      app.get(p, function(req, res){
-        var angPath = exports.routeIt( req );
-        res.redirect( angPath );
-        newPaths.push( angPath );
-      });
+      if ( app.route && typeof app.route === 'function' ) {
+        app
+          .route( p )
+          .get( onRoute );
+      } else {
+        app.get( p, onRoute );
+      }
     });
     return newPaths;
   };
 
-  exports.testRouteAll = function(paths) {
-    var newPaths = [];
-    for (var i = 0; i < paths.length; i++) {
-      var p = paths[ i ];
-      var req = {};
-      req.path = p;
-      req.params = {};
-      var newPath = exports.routeIt( req );
-      newPaths.push( newPath );
+  exports.configure = function( _managedRoutes ) {
+    managedRoutes = _managedRoutes || managedRoutes;
+  };
+
+  exports.route = function( req, res, next ) {
+    var _path = req._parsedUrl.path;
+    if ( managedRoutes.indexOf( _path ) > -1 ) {
+      var angPath = exports.routeIt( req );
+      res.redirect( '/' + sysPath.join( angPath ) );
+    } else {
+      next();
     }
-    return newPaths;
   };
 
 })();
