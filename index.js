@@ -6,6 +6,7 @@
   var sysPath = require('path');
   var prefixHash;
   var managedRoutes = [];
+  var ignore = [];
 
   var parseIt = function(req) {
     var obj = req.path.split('/');
@@ -37,6 +38,11 @@
     }
   };
 
+  exports.ignore = function( ignoreRoutes ) {
+    ignore = ignoreRoutes || ignore;
+    return exports;
+  };
+
   exports.removePrefixHash = function() {
     prefixHash = null;
     return exports;
@@ -66,17 +72,27 @@
     }
   };
 
-  exports.route = function( req, res, next ) {
+  exports.route = function() {
     return function( req, res, next ) {
       var _path = req._parsedUrl.path;
-      if ( _path !== '/' ) {
+      var shouldIgnorePath = shouldIgnore( _path );
+      if ( _path === '/' || shouldIgnorePath ) {
+        return next();
+      }
+      else {
         var foo = exports.routeIt( req );
         res.redirect( '/' + foo );
-      } else {
-        next();
       }
     };
   };
+
+  function shouldIgnore( p ) {
+    for ( var i = 0; i < ignore.length; i++ ) {
+      if ( new RegExp( ignore[ i ] ).test( p ) ) {
+        return true;
+      }
+    }
+  }
 
 })();
 
