@@ -49,11 +49,6 @@
     return exports;
   };
 
-  /**
-   * DEPRECATED DO NOT USE
-   * @param  {[type]} req [description]
-   * @return {[type]}     [description]
-   */
   exports.routeIt = function(req) {
     var path = req.path;
     var staticIndexEnd = pointsToStaticHtml( path );
@@ -71,44 +66,16 @@
     }
   };
 
-  /**
-   * DEPRECATED DO NOT USE
-   * @param  {[type]} paths [description]
-   * @param  {[type]} app   [description]
-   * @return {[type]}       [description]
-   */
-  exports.routeAll = function(paths, app) {
-    var newPaths = [];
-    var onRoute = function(req, res){
-      var angPath = exports.routeIt( req );
-      res.redirect( angPath );
-      newPaths.push( angPath );
-    };
-    paths.forEach(function(p){
-      if ( app.route && typeof app.route === 'function' ) {
-        app
-          .route( p )
-          .get( onRoute );
-      } else {
-        app.get( p, onRoute );
-      }
-    });
-    return newPaths;
-  };
-
-  exports.configure = function( _managedRoutes ) {
-    managedRoutes = _managedRoutes || managedRoutes;
-    return exports;
-  };
-
   exports.route = function( req, res, next ) {
-    var _path = req._parsedUrl.path;
-    if ( managedRoutes.indexOf( _path ) > -1 ) {
-      var angPath = exports.routeIt( req );
-      res.redirect( '/' + sysPath.join( angPath ) );
-    } else {
-      next();
-    }
+    return function( req, res, next ) {
+      var _path = req._parsedUrl.path;
+      if ( _path !== '/' ) {
+        var foo = exports.routeIt( req );
+        res.redirect( '/' + foo );
+      } else {
+        next();
+      }
+    };
   };
 
 })();

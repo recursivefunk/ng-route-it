@@ -23,31 +23,10 @@ Use ng-route-it as a third party middleware
 ```javascript
   var ngRoute = require( 'ng-route-it' );
 
-  var myAngularRoutes = [
-    '/people/:team/:id',
-    '/another/route'
-  ];
-
-  ngRoute.configure( myAngularRoutes );
-
-  app.use( ngRoute.route );
+  app.use( ngRoute.route() );
 
   // Now all of your angular routes will pass through the server to your angular app
   // which knows how to deal with them
-```
-
-You can use paths with static html at the root followed by your angular path
-
-```javascript
-  var routeIt = require( 'ng-route-it' );
-
-  var myAngularRoutes = [
-    '/index.html/people/:team/:id'
-  ];
-
-  ngRoute.configure( myAngularRoutes );
-
-  app.use( ngRoute.route );
 ```
 
 Using a prefix hash? No problem
@@ -61,11 +40,7 @@ Using a prefix hash? No problem
   // in your server code
   var routeIt = require( 'ng-route-it' );
 
-  // .. define an array of routes
-
-  ngRoute.configure( myAngularRoutes ).setPrefixHash( '!' );
-
-  app.use( ngRoute.route );
+  app.use( ngRoute.setPrefixHash( '!' ).route() );
 ```
 
 To run tests

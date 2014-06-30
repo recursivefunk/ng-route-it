@@ -1,10 +1,10 @@
 {
   "name": "ng-route-it",
-  "version": "0.2.1",
-  "description": "Takes server routes and converts them into angular.js routes",
+  "version": "0.3.0",
+  "description": "Middleware that allows client side angularjs routes to pass through your server",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/test"
   },
   "author": "Johnny Ray Austin",
   "license": "BSD-2-Clause",
@@ -18,6 +18,11 @@
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-mocha": "~0.4.7",
-    "grunt-mocha-test": "~0.8.1"
+    "grunt-mocha-test": "~0.8.1",
+    "express": "~4.0.0",
+    "api-easy": "~0.3.8",
+    "request": "~2.34.0",
+    "restify": "~2.7.0",
+    "async": "~0.7.0"
   }
 }
