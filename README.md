@@ -45,7 +45,7 @@ Using a prefix hash? No problem
 
 Oh, you have some endpoints that return data or something that you need to have work as usual?
 ```javascript
-  ngRoute.ignore( [ '^/api' ] );
+  ngRoute.ignore( [ /^\/api/ ] );
 
   app.use( ngRoute.route() );
 
