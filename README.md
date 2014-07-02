@@ -55,6 +55,14 @@ Oh, you have some endpoints that return data or something that you need to have 
   });
 ```
 
+The API chainable if you're into that sorta thing
+```javascript
+
+app.use(
+  require( 'ng-route-it' ).ignore( [ /^\/api/ ] ).setPrefixHash( '!' ).route()
+);
+
+```
 
 To run tests
 
