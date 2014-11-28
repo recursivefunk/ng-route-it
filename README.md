@@ -43,7 +43,7 @@ Using a hash prefix? No problem
   app.use( ngRoute.setPrefixHash( '!' ).route() );
 ```
 
-Oh, you have some endpoints that return data or something that you need to have work as usual?
+Oh, you have some endpoints that return data or something that you need to have work as usual? An array of regexes gets you what you need.
 ```javascript
   ngRoute.ignore( [ /^\/api/ ] );
 
