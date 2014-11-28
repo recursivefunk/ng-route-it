@@ -29,7 +29,7 @@ Use ng-route-it as a third party middleware
   // which knows how to deal with them
 ```
 
-Using a prefix hash? No problem
+Using a hash prefix? No problem
 
 ```javascript
   // angular code
