@@ -10,7 +10,7 @@
   "license": "BSD-2-Clause",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jrayaustin/ng-route-it.git"
+    "url": "https://github.com/recursivefunk/ng-route-it.git"
   },
   "dependencies": {
     "should": "~2.1.1"
